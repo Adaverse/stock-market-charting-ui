@@ -1,25 +1,36 @@
 import logo from './logo.svg';
-import './App.css';
+
+import { ManageCompanies } from './Admin/pages/ManageCompanies/ManageCompanies';
+import { ImportData } from './Admin/pages/ImportData/ImportData';
+import { ManageExchange } from './Admin/pages/ManageExchange/ManageExchange';
+import { Navbar } from './Admin/components/Navbar/Navbar';
+
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+  } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+        <div>
+            <Navbar/>
+            
+            <Switch>
+                <Route exact path="/">
+                    <Redirect to="/ImportData"></Redirect>
+                </Route>
+                <Route path="/ImportData" exact component={ImportData}></Route>
+                <Route path="/ManageCompanies" exact component={ManageCompanies}></Route>
+                <Route path="/ManageExchange" exact component={ManageExchange}></Route>
+            </Switch>
+            
+        </div>
+    </Router>
   );
 }
 
 export default App;
+    

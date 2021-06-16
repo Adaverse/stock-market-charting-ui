@@ -1,0 +1,28 @@
+.nav-menu-admin {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    margin-top: 0px;
+}
+
+.nav-item-admin {
+    /* padding: 10px; */
+    display: inline-flex;
+    align-items: center;
+    margin: 10px 10px 10px 10px;
+    /* justify-content: left; */
+    text-decoration: none;
+    color: white;
+}
+
+.nav-admin{
+    background-color: #1DA1F2;
+    color: white;
+} 
+
+.nav-item-admin.active{
+    background-color: white;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+}
