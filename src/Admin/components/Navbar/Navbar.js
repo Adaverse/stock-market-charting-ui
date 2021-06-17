@@ -20,7 +20,21 @@ export const Navbar = () => {
                 setHighlight(2)
                 break;
         }
-    }
+    };
+
+    useEffect(() => {
+        switch(location.pathname){
+            case "/ImportData":
+                setHighlight(0);
+                break;
+            case "/ManageCompanies":
+                setHighlight(1);
+                break;
+            case "/ManageExchange":
+                setHighlight(2);
+                break;
+        }
+    }, []);
 
     return (
         <nav className="nav-admin">
