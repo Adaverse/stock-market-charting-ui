@@ -1,0 +1,6 @@
+.ipo-list-container {
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}

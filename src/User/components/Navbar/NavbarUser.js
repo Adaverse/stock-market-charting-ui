@@ -1,9 +1,9 @@
 import React, {Component, useState, useEffect} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
-import './Navbar.css';
+import './NavbarUser.css';
 
-export const Navbar = () => {
+export const NavbarUser = () => {
 
     const [highlight, setHighlight] = useState(0);
     const location = useLocation();
@@ -24,13 +24,13 @@ export const Navbar = () => {
 
     useEffect(() => {
         switch(location.pathname){
-            case "/ImportData":
+            case "/IpoDetails":
                 setHighlight(0);
                 break;
-            case "/ManageCompanies":
+            case "/CompareCompanies":
                 setHighlight(1);
                 break;
-            case "/ManageExchange":
+            case "/CompareSecors":
                 setHighlight(2);
                 break;
         }
@@ -40,26 +40,26 @@ export const Navbar = () => {
         <nav className="nav-admin">
             <ul className="nav-menu-admin">
                 
-                <li className={highlight === 0 ? "nav-item-admin active" : "nav-item-admin"}>
-                    <Link to='/ImportData' style={{ textDecoration: 'none' }}>
-                        <div  onClick={() => handleNavClick(0)}>
-                            Import Data
+                <li className={highlight === 0 ? "nav-item-admin active" : "nav-item-admin"} >
+                    <Link to='/IpoDetails' style={{ textDecoration: 'none' }}>
+                        <div onClick={() => handleNavClick(0)}>
+                            Ipo Details
                         </div>
                     </Link>
                 </li>
                 
-                <li className={highlight === 1 ? "nav-item-admin active" : "nav-item-admin"}>
-                    <Link to='/ManageCompanies' style={{ textDecoration: 'none' }}>
-                        <div style={{textDecoration:'none'}}  onClick={() => handleNavClick(1)}>
-                            Manage Companies
+                <li className={highlight === 1 ? "nav-item-admin active" : "nav-item-admin"} >
+                    <Link to='/CompareCompanies' style={{ textDecoration: 'none' }}>
+                        <div style={{textDecoration:'none'}} onClick={() => handleNavClick(1)}>
+                            Compare Companies
                         </div>
                     </Link>
                 </li>
 
-                <li className={highlight === 2 ? "nav-item-admin active" : "nav-item-admin"}>
-                    <Link to='/ManageExchange' style={{ textDecoration: 'none' }}>
-                        <div style={{textDecoration:'none'}}  onClick={() => handleNavClick(2)}>
-                            Manage Exchange
+                <li className={highlight === 2 ? "nav-item-admin active" : "nav-item-admin"} >
+                    <Link to='/CompareSecors' style={{ textDecoration: 'none' }}>
+                        <div style={{textDecoration:'none'}} onClick={() => handleNavClick(2)}>
+                            Compare Sectors
                         </div>
                     </Link>
                 </li>

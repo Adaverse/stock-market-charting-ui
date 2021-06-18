@@ -5,29 +5,68 @@ import { ImportData } from './Admin/pages/ImportData/ImportData';
 import { ManageExchange } from './Admin/pages/ManageExchange/ManageExchange';
 import { Navbar } from './Admin/components/Navbar/Navbar';
 
+import { NavbarUser } from './User/components/Navbar/NavbarUser';
+import { CompareCompanies } from './User/pages/CompareCompanies/CompareCompanies';
+import { CompareSecors } from "./User/pages/CompareSectors/CompareSectors";
+import { IpoDetails } from './User/pages/IpoDetails/IpoDetails';
+
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Redirect,
   } from "react-router-dom";
+import { useState } from 'react';
 
 function App() {
+    const [isAdmin, setIsAdmin] = useState(true);
   return (
     <Router>
-        <div>
-            <Navbar/>
-            
-            <Switch>
-                <Route exact path="/">
-                    <Redirect to="/ImportData"></Redirect>
-                </Route>
-                <Route path="/ImportData" exact component={ImportData}></Route>
-                <Route path="/ManageCompanies" exact component={ManageCompanies}></Route>
-                <Route path="/ManageExchange" exact component={ManageExchange}></Route>
-            </Switch>
-            
+        <button onClick={() => setIsAdmin(!isAdmin)}>
+            Switch!
+        </button>
+      <div>
+        {isAdmin ? <div>
+          <Navbar />
+
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/ImportData"></Redirect>
+            </Route>
+            <Route path="/ImportData" exact component={ImportData}></Route>
+            <Route
+              path="/ManageCompanies"
+              exact
+              component={ManageCompanies}
+            ></Route>
+            <Route
+              path="/ManageExchange"
+              exact
+              component={ManageExchange}
+            ></Route>
+          </Switch>
         </div>
+        :
+        <div>
+          <NavbarUser />
+          <Switch>
+            <Route exact path="/">
+              <Redirect to="/IpoDetails"></Redirect>
+            </Route>
+            <Route path="/IpoDetails" exact component={IpoDetails}></Route>
+            <Route
+              path="/CompareCompanies"
+              exact
+              component={CompareCompanies}
+            ></Route>
+            <Route
+              path="/CompareSecors"
+              exact
+              component={CompareSecors}
+            ></Route>
+          </Switch>
+        </div>}
+      </div>
     </Router>
   );
 }

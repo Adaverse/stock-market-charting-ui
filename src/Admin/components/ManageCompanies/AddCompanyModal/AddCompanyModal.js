@@ -21,15 +21,29 @@ const customStyles = {
   export function AddCompanyModal({isOpen, toggle, mode, editData}) {
 
     const [formData, setFormData] = useState({companyName: '', turnOver: '', ceo: '', boardDirectors: '', briefWriteup: ''});
+    const [ipoDetails, setIpoDetails] = useState({pricePerShare: null, totalShares: null, openDateTime: "", remarks: ""});
 
     const addCompany = (formData) => {
-        postRequest(BASE_URL + "/addCompany", formData).then(
-            (data) => {
-                console.log(data);
-            }
-        ).catch(
-            error => console.log(error)
-        )
+        console.log(ipoDetails)
+        if(ipoDetails.pricePerShare && ipoDetails.totalShares && ipoDetails.openDateTime && ipoDetails.remarks){
+            console.log('there was ipo details found!')
+            postRequest(BASE_URL + "/addCompany", {...formData, ipo: ipoDetails}).then(
+                (data) => {
+                    console.log(data);
+                }
+            ).catch(
+                error => console.log(error)
+            )
+        } else {
+            console.log('there was no ipo details found!')
+            postRequest(BASE_URL + "/addCompany", formData).then(
+                (data) => {
+                    console.log(data);
+                }
+            ).catch(
+                error => console.log(error)
+            )
+        }
     }
 
     const updateCompany = (formData) => {
@@ -128,6 +142,59 @@ const customStyles = {
                         type = 'text'
                         value = {formData.briefWriteup}
                         onChange= {(e) => setFormData((data) => ({...data, briefWriteup: e.target.value}))}
+                    />
+                </div>
+              </div>
+          </div>
+          <div>
+              <div  className="heading-modal">
+                Add Ipo Details
+              </div>
+              <div className="single-input-conatainer">
+                <div>
+                    Price per share
+                </div>
+                <div>
+                    <input
+                        type = 'text'
+                        value = {setIpoDetails.pricePerShare}
+                        onChange= {(e) => setIpoDetails((data) => ({...data, pricePerShare: e.target.value}))}
+                    />
+                </div>
+              </div>
+              <div className="single-input-conatainer">
+                <div>
+                    Total shares
+                </div>
+                <div>
+                    <input
+                        type = 'text'
+                        value = {setIpoDetails.totalShares}
+                        onChange= {(e) => setIpoDetails((data) => ({...data, totalShares: e.target.value}))}
+                    />
+                </div>
+              </div>
+              <div className="single-input-conatainer">
+                <div>
+                    Open date time
+                </div>
+                <div>
+                    <input
+                        type = 'text'
+                        value = {setIpoDetails.openDateTime}
+                        onChange= {(e) => setIpoDetails((data) => ({...data, openDateTime: e.target.value}))}
+                    />
+                </div>
+              </div>
+              <div className="single-input-conatainer">
+                <div>
+                    Remarks
+                </div>
+                <div>
+                    <input
+                        type = 'text'
+                        value = {setIpoDetails.remarks}
+                        onChange= {(e) => setIpoDetails((data) => ({...data, remarks: e.target.value}))}
                     />
                 </div>
               </div>
