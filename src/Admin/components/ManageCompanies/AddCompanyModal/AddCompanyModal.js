@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import Modal from 'react-modal';
 
-import { postRequest, putRequest } from "../../../../services/NetworkRequests";
+import { postRequest, putRequest, getRequest } from "../../../../services/NetworkRequests";
 import { BASE_URL } from "../../../../services/url";
 
 import './AddCompanyModal.css'
@@ -14,7 +14,8 @@ const customStyles = {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      minWidth: window.innerWidth*0.25
+      minWidth: window.innerWidth*0.25,
+      maxHeight: window.innerHeight*0.9
     },
   };
 
@@ -22,6 +23,8 @@ const customStyles = {
 
     const [formData, setFormData] = useState({companyName: '', turnOver: '', ceo: '', boardDirectors: '', briefWriteup: ''});
     const [ipoDetails, setIpoDetails] = useState({pricePerShare: null, totalShares: null, openDateTime: "", remarks: ""});
+    const [stockExchanges, setStockExchanges] = useState([]);
+    const [selectedStockExchanges, setSelectedStockExchanges] = useState([]);
 
     const addCompany = (formData) => {
         console.log(ipoDetails)
@@ -76,6 +79,18 @@ const customStyles = {
         }
     }
 
+    // getting stock exchanges
+    useEffect(() => {
+        getRequest(BASE_URL + '/stockExchanges').then(
+            (data) => {
+                console.log(data);
+                setStockExchanges(data);
+            }
+        ).catch(
+            error => console.log(error)
+        )
+    }, [])
+
     return (
       <div>
         <Modal
@@ -85,68 +100,162 @@ const customStyles = {
         >
           <div className="heading-modal">Create new company</div>
           <div>
-              <div className="single-input-conatainer">
-                <div>
-                    Comapany Name
-                </div>
-                <div>
+            <div className="single-input-conatainer">
+              <div class="container">
+                <div class="row">
+                  <div class="col">Comapany Name</div>
+                  <div class="col">
                     <input
-                        type = 'text'
-                        value = {formData.companyName}
-                        onChange= {(e) => setFormData((data) => ({...data, companyName: e.target.value}))}
+                      type="text"
+                      value={formData.companyName}
+                      onChange={(e) =>
+                        setFormData((data) => ({
+                          ...data,
+                          companyName: e.target.value,
+                        }))
+                      }
                     />
+                  </div>
                 </div>
               </div>
-              <div className="single-input-conatainer">
-                <div>
-                    CEO
-                </div>
-                <div>
+            </div>
+            <div className="single-input-conatainer">
+              <div class="container">
+                <div class="row">
+                  <div class="col">CEO</div>
+                  <div class="col">
                     <input
-                        type = 'text'
-                        value = {formData.ceo}
-                        onChange= {(e) => setFormData((data) => ({...data, ceo: e.target.value}))}
+                      type="text"
+                      value={formData.ceo}
+                      onChange={(e) =>
+                        setFormData((data) => ({
+                          ...data,
+                          ceo: e.target.value,
+                        }))
+                      }
                     />
+                  </div>
                 </div>
               </div>
-              <div className="single-input-conatainer">
-                <div>
-                    Board Members
-                </div>
-                <div>
+            </div>
+            <div className="single-input-conatainer">
+              <div class="container">
+                <div class="row">
+                  <div class="col">Board Members</div>
+                  <div class="col">
                     <input
-                        type = 'text'
-                        value = {formData.boardDirectors}
-                        onChange= {(e) => setFormData((data) => ({...data, boardDirectors: e.target.value}))}
+                      type="text"
+                      value={formData.boardDirectors}
+                      onChange={(e) =>
+                        setFormData((data) => ({
+                          ...data,
+                          boardDirectors: e.target.value,
+                        }))
+                      }
                     />
+                  </div>
                 </div>
               </div>
-              <div className="single-input-conatainer">
-                <div>
-                    Turn Over
-                </div>
-                <div>
+            </div>
+            <div className="single-input-conatainer">
+              <div class="container">
+                <div class="row">
+                  <div class="col">Turn Over</div>
+                  <div class="col">
                     <input
-                        type = 'text'
-                        value = {formData.turnOver}
-                        onChange= {(e) => setFormData((data) => ({...data, turnOver: e.target.value}))}
+                      type="text"
+                      value={formData.turnOver}
+                      onChange={(e) =>
+                        setFormData((data) => ({
+                          ...data,
+                          turnOver: e.target.value,
+                        }))
+                      }
                     />
+                  </div>
                 </div>
               </div>
+            </div>
+            <div className="single-input-conatainer">
+              <div class="container">
+                <div class="row">
+                  <div class="col">Brief Description</div>
+                  <div class="col">
+                    <input
+                      type="text"
+                      value={formData.briefWriteup}
+                      onChange={(e) =>
+                        setFormData((data) => ({
+                          ...data,
+                          briefWriteup: e.target.value,
+                        }))
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="single-input-conatainer">
+              <div class="container">
+                <div class="row">
+                  <div class="col">Stock Exchanges</div>
+                  <div class="col">
+                    {stockExchanges.map((item, index) => (
+                      <div>
+                        <input
+                          type="checkbox"
+                          value={item.stockExchangeName}
+                          onChange={(e) => {
+                            var temp = selectedStockExchanges;
+                            if (
+                              selectedStockExchanges.includes(
+                                item.stockExchangeName
+                              )
+                            ) {
+                              var index = temp.indexOf(item.stockExchangeName);
+                              temp.splice(index, 1);
+                              setSelectedStockExchanges((data) => [...temp]);
+                            } else {
+                              // temp.push(item.stockExchangeName);
+                              // setSelectedStockExchanges(temp);
+                              setSelectedStockExchanges((data) => [
+                                ...selectedStockExchanges,
+                                item.stockExchangeName,
+                              ]);
+                            }
+                          }}
+                          name={item.stockExchangeName}
+                        />
+                        {item.stockExchangeName}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {selectedStockExchanges.map((item, index) => (
               <div className="single-input-conatainer">
-                <div>
-                    Brief Description
-                </div>
-                <div>
-                    <textarea
-                        type = 'text'
-                        value = {formData.briefWriteup}
-                        onChange= {(e) => setFormData((data) => ({...data, briefWriteup: e.target.value}))}
-                    />
+                <div class="container">
+                  <div class="row">
+                    <div class="col">Company Code [{item}]</div>
+                    <div class="col">
+                      <input
+                        type="text"
+                        value={formData.briefWriteup}
+                        onChange={(e) =>
+                          setFormData((data) => ({
+                            ...data,
+                            briefWriteup: e.target.value,
+                          }))
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
+            ))}
           </div>
-          <div>
+          {/* <div>
               <div  className="heading-modal">
                 Add Ipo Details
               </div>
@@ -198,9 +307,19 @@ const customStyles = {
                     />
                 </div>
               </div>
-          </div>
-          <button onClick={() => {onSubmit()}}>Submit</button>
-          <button onClick={() => toggle(false)}>Close</button>
+          </div> */}
+          <button
+            onClick={() => {
+              //   onSubmit();
+              console.log(selectedStockExchanges);
+            }}
+            class="btn btn-success"
+          >
+            Submit
+          </button>
+          <button onClick={() => toggle(false)} class="btn btn-warning">
+            Close
+          </button>
         </Modal>
       </div>
     );

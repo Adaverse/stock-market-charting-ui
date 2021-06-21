@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import { ManageCompanies } from './Admin/pages/ManageCompanies/ManageCompanies';
 import { ImportData } from './Admin/pages/ImportData/ImportData';
 import { ManageExchange } from './Admin/pages/ManageExchange/ManageExchange';
+import { ManageSectors } from './Admin/pages/ManageSectors/ManageSectors';
 import { Navbar } from './Admin/components/Navbar/Navbar';
 
 import { NavbarUser } from './User/components/Navbar/NavbarUser';
@@ -43,6 +44,11 @@ function App() {
               path="/ManageExchange"
               exact
               component={ManageExchange}
+            ></Route>
+            <Route
+              path="/ManageSectors"
+              exact
+              component={ManageSectors}
             ></Route>
           </Switch>
         </div>

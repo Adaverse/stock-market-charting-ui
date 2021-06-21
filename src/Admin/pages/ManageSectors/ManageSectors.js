@@ -1,22 +1,21 @@
 import React, {Component, useState, useEffect} from 'react';
 
-import { AddStockExchangeModal } from '../../components/ManageExchange/AddStockExchangeModal/AddStockExchangeModal';
-import "./ManageExchange.css";
+import { AddSectorModal } from '../../components/ManageSectors/AddSectorModal/AddSectorModal';
 
 import { BASE_URL } from '../../../services/url';
 import { getRequest } from '../../../services/NetworkRequests';
 
-export const ManageExchange = () => {
+export const ManageSectors = () => {
     
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [data, setData] = useState([]);
 
-    const toggleAddStockExchangeModal = (value) => {
+    const toggleAddSector = (value) => {
         setIsModalOpen(value);
     } 
 
     useEffect(() => {
-        getRequest(BASE_URL + '/stockExchanges').then(
+        getRequest(BASE_URL + '/getSectors').then(
             (data) => {
                 console.log(data);
                 setData(data);
@@ -28,9 +27,9 @@ export const ManageExchange = () => {
 
     return (
       <div>
-        <AddStockExchangeModal
+        <AddSectorModal
           isOpen={isModalOpen}
-          toggle={toggleAddStockExchangeModal}
+          toggle={toggleAddSector}
         />
         <div
           style={{
@@ -44,19 +43,15 @@ export const ManageExchange = () => {
         </div>
         <div class="container">
           <div class="row" style={{ backgroundColor: "lightblue" }}>
-            <div class="col">Stock Exchange Name</div>
+            <div class="col">Sector Name</div>
             <div class="col">Brief</div>
-            <div class="col">Address</div>
-            <div class="col">Remark</div>
           </div>
         </div>
         {data.map((item, index) => (
           <div class="container">
             <div class="row">
-              <div class="col">{item.stockExchangeName}</div>
+              <div class="col">{item.sectorName}</div>
               <div class="col">{item.brief}</div>
-              <div class="col">{item.address}</div>
-              <div class="col">{item.remarks}</div>
             </div>
           </div>
         ))}
@@ -65,11 +60,11 @@ export const ManageExchange = () => {
             <div class = "col-12">
               <button
                 onClick={() => {
-                  toggleAddStockExchangeModal(true);
+                  toggleAddSector(true);
                 }}
                 class="btn btn-primary"
               >
-                Add Stock Exchange
+                Add Sector
               </button>
             </div>
           </div>

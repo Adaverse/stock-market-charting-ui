@@ -19,6 +19,9 @@ export const Navbar = () => {
             case 2:
                 setHighlight(2)
                 break;
+            case 3:
+                setHighlight(3);
+                break;
         }
     };
 
@@ -32,6 +35,9 @@ export const Navbar = () => {
                 break;
             case "/ManageExchange":
                 setHighlight(2);
+                break;
+            case "/ManageSectors":
+                setHighlight(3);
                 break;
         }
     }, []);
@@ -60,6 +66,14 @@ export const Navbar = () => {
                     <Link to='/ManageExchange' style={{ textDecoration: 'none' }}>
                         <div style={{textDecoration:'none'}}  onClick={() => handleNavClick(2)}>
                             Manage Exchange
+                        </div>
+                    </Link>
+                </li>
+
+                <li className={highlight === 3 ? "nav-item-admin active" : "nav-item-admin"}>
+                    <Link to='/ManageSectors' style={{ textDecoration: 'none' }}>
+                        <div style={{textDecoration:'none'}}  onClick={() => handleNavClick(3)}>
+                            Manage Sectors
                         </div>
                     </Link>
                 </li>
