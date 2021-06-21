@@ -25,6 +25,7 @@ const customStyles = {
     const [ipoDetails, setIpoDetails] = useState({pricePerShare: null, totalShares: null, openDateTime: "", remarks: ""});
     const [stockExchanges, setStockExchanges] = useState([]);
     const [selectedStockExchanges, setSelectedStockExchanges] = useState([]);
+    const [companyCodes, setCompanyCodes] = useState()
 
     const addCompany = (formData) => {
         console.log(ipoDetails)
