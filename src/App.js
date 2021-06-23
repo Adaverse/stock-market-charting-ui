@@ -4,6 +4,7 @@ import { ManageCompanies } from './Admin/pages/ManageCompanies/ManageCompanies';
 import { ImportData } from './Admin/pages/ImportData/ImportData';
 import { ManageExchange } from './Admin/pages/ManageExchange/ManageExchange';
 import { ManageSectors } from './Admin/pages/ManageSectors/ManageSectors';
+import { ManageIpos } from './Admin/pages/ManageIpos/ManageIpos';
 import { Navbar } from './Admin/components/Navbar/Navbar';
 
 import { NavbarUser } from './User/components/Navbar/NavbarUser';
@@ -49,6 +50,11 @@ function App() {
               path="/ManageSectors"
               exact
               component={ManageSectors}
+            ></Route>
+            <Route
+              path="/ManageIpos"
+              exact
+              component={ManageIpos}
             ></Route>
           </Switch>
         </div>

@@ -22,6 +22,9 @@ export const Navbar = () => {
             case 3:
                 setHighlight(3);
                 break;
+            case 4: 
+                setHighlight(4);
+                break;
         }
     };
 
@@ -38,6 +41,9 @@ export const Navbar = () => {
                 break;
             case "/ManageSectors":
                 setHighlight(3);
+                break;
+            case "/ManageIpos":
+                setHighlight(4);
                 break;
         }
     }, []);
@@ -74,6 +80,14 @@ export const Navbar = () => {
                     <Link to='/ManageSectors' style={{ textDecoration: 'none' }}>
                         <div style={{textDecoration:'none'}}  onClick={() => handleNavClick(3)}>
                             Manage Sectors
+                        </div>
+                    </Link>
+                </li>
+
+                <li className={highlight === 4 ? "nav-item-admin active" : "nav-item-admin"}>
+                    <Link to='/ManageIpos' style={{ textDecoration: 'none' }}>
+                        <div style={{textDecoration:'none'}}  onClick={() => handleNavClick(4)}>
+                            Manage IPOs
                         </div>
                     </Link>
                 </li>

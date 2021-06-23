@@ -11,7 +11,12 @@ export const IpoDetails = () => {
         getRequest(BASE_URL + "/ipos").then(
             (data) => {
                 console.log(data);
-                setData(data);
+                for(let i = 0; i < data.length; i++){
+                    console.log(data[i].company)
+                    if(data[i].company){
+                        setData(data1 => [...data1, data[i]])
+                    }
+                }
             }
         ).catch((error) => {
             console.log(error);

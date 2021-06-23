@@ -25,7 +25,7 @@ const customStyles = {
     const [ipoDetails, setIpoDetails] = useState({pricePerShare: null, totalShares: null, openDateTime: "", remarks: ""});
     const [stockExchanges, setStockExchanges] = useState([]);
     const [selectedStockExchanges, setSelectedStockExchanges] = useState([]);
-    const [companyCodes, setCompanyCodes] = useState()
+    const [companyCodes, setCompanyCodes] = useState({});
 
     const addCompany = (formData) => {
         console.log(ipoDetails)
@@ -39,15 +39,30 @@ const customStyles = {
                 error => console.log(error)
             )
         } else {
-            console.log('there was no ipo details found!')
-            postRequest(BASE_URL + "/addCompany", formData).then(
+            var companyCodeList = [];
+            for (const [key, value] of Object.entries(companyCodes)) {
+                companyCodeList.push({companyCode: parseInt(value), companyName: formData.companyName, stockExchangeName: key});
+              }
+            console.log(companyCodeList);
+            postRequest(BASE_URL + "/addCompany", {...formData, stockExchangeNames: selectedStockExchanges}).then(
                 (data) => {
                     console.log(data);
+                    postCompanyCode(companyCodeList);
                 }
             ).catch(
                 error => console.log(error)
             )
         }
+    }
+
+    const postCompanyCode = (data) => {
+        postRequest(BASE_URL + '/addCompanyCode', data).then(
+            (data) => {
+                console.log(data);
+            }
+        ).catch(
+            error => console.log(error)
+        )
     }
 
     const updateCompany = (formData) => {
@@ -196,7 +211,7 @@ const customStyles = {
                 </div>
               </div>
             </div>
-            <div className="single-input-conatainer">
+            {mode === "add" && <div className="single-input-conatainer">
               <div class="container">
                 <div class="row">
                   <div class="col">Stock Exchanges</div>
@@ -216,6 +231,9 @@ const customStyles = {
                               var index = temp.indexOf(item.stockExchangeName);
                               temp.splice(index, 1);
                               setSelectedStockExchanges((data) => [...temp]);
+                              var tempCompanyCode = companyCodes;
+                              delete tempCompanyCode[item.stockExchangeName];
+                              setCompanyCodes(tempCompanyCode);
                             } else {
                               // temp.push(item.stockExchangeName);
                               // setSelectedStockExchanges(temp);
@@ -223,6 +241,9 @@ const customStyles = {
                                 ...selectedStockExchanges,
                                 item.stockExchangeName,
                               ]);
+                              var tempCompanyCode = companyCodes;
+                              tempCompanyCode[item.stockExchangeName] = "";
+                              setCompanyCodes(tempCompanyCode);
                             }
                           }}
                           name={item.stockExchangeName}
@@ -233,7 +254,7 @@ const customStyles = {
                   </div>
                 </div>
               </div>
-            </div>
+            </div>}
             {selectedStockExchanges.map((item, index) => (
               <div className="single-input-conatainer">
                 <div class="container">
@@ -242,13 +263,12 @@ const customStyles = {
                     <div class="col">
                       <input
                         type="text"
-                        value={formData.briefWriteup}
-                        onChange={(e) =>
-                          setFormData((data) => ({
-                            ...data,
-                            briefWriteup: e.target.value,
-                          }))
-                        }
+                        value={companyCodes[item]}
+                        onChange={(e) => {
+                          var temp = companyCodes;
+                          temp[item] = e.target.value;
+                          setCompanyCodes((data) => ({ ...temp }));
+                        }}
                       />
                     </div>
                   </div>
@@ -311,8 +331,7 @@ const customStyles = {
           </div> */}
           <button
             onClick={() => {
-              //   onSubmit();
-              console.log(selectedStockExchanges);
+                onSubmit();
             }}
             class="btn btn-success"
           >
